@@ -60,7 +60,7 @@ dependencies {
     implementation("dev.sublab:common-kotlin:$sublabCommonVersion")
     implementation("dev.sublab:scale-codec-kotlin:$sublabScaleVersion")
     implementation("dev.sublab:hashing-kotlin:$sublabHashingVersion")
-    implementation("com.github.sumeetswn:encrypting-kotlin:dev-SNAPSHOT")
+    implementation("com.github.SovereignWallet-Network:encrypting-kotlin:$sublabEncryptingVersion")
 }
 
 tasks.test {
