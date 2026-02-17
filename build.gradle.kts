@@ -4,9 +4,7 @@ plugins {
     kotlin("jvm")
     kotlin("plugin.serialization")
     id("org.jetbrains.dokka")
-    id("io.github.gradle-nexus.publish-plugin")
     `maven-publish`
-    signing
 }
 
 group = "dev.sublab"
@@ -15,6 +13,7 @@ version = "1.0.0"
 repositories {
     mavenLocal()
     mavenCentral()
+    maven { url = uri("https://jitpack.io") }
     maven { url = uri("https://repo.repsy.io/mvn/chrynan/public") } // Kotlin SecureRandom
 }
 
@@ -61,7 +60,7 @@ dependencies {
     implementation("dev.sublab:common-kotlin:$sublabCommonVersion")
     implementation("dev.sublab:scale-codec-kotlin:$sublabScaleVersion")
     implementation("dev.sublab:hashing-kotlin:$sublabHashingVersion")
-    implementation("dev.sublab:encrypting-kotlin:$sublabEncryptingVersion")
+    implementation("com.github.sumeetswn:encrypting-kotlin:dev-SNAPSHOT")
 }
 
 tasks.test {
@@ -123,29 +122,7 @@ publishing {
                         organizationUrl.set("https://sublab.dev")
                     }
                 }
-                scm {
-                    connection.set("scm:git:https://github.com/sublabdev/${rootProject.name}.git")
-                    developerConnection.set("scm:git:https://github.com/sublabdev/${rootProject.name}.git")
-                    url.set("https://github.com/sublabdev/${rootProject.name}")
-                }
             }
         }
     }
-}
-
-nexusPublishing {
-    repositories {
-        sonatype {
-            packageGroup.set("dev.sublab")
-            username.set(extra.get("ossrhUsername") as? String)
-            password.set(extra.get("ossrhPassword") as? String)
-            nexusUrl.set(uri("https://s01.oss.sonatype.org/service/local/"))
-            snapshotRepositoryUrl.set(uri("https://s01.oss.sonatype.org/content/repositories/snapshots/"))
-        }
-    }
-}
-
-signing {
-    useGpgCmd()
-    sign(publishing.publications["mavenJava"])
 }
